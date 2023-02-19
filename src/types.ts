@@ -247,9 +247,7 @@ export interface TimelineProviderProps {
    ** All days in a week ([#Example](https://howljs.github.io/react-native-calendar-kit/docs/guides/unavailable-time#set-unavailable-hours-for-all-days-in-a-week))
    ** By week day. ([#Example](https://howljs.github.io/react-native-calendar-kit/docs/guides/unavailable-time#set-unavailable-hours-by-week-day))
    */
-  unavailableHours?:
-    | UnavailableHour[]
-    | { [weekDay: string]: UnavailableHour[] };
+  unavailableHours?: UnavailableHour[] | TimeRanges;
 
   /** Show a line at current time.
    *
@@ -398,6 +396,10 @@ export interface RangeTime {
 export interface UnavailableHour {
   start: number;
   end: number;
+}
+
+export interface TimeRanges {
+  [key: string]: UnavailableHour[];
 }
 
 export type UnavailableHoursStyle = Record<

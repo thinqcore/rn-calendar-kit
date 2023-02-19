@@ -7,6 +7,7 @@ import {
   TimelineCalendar,
   TimelineCalendarHandle,
   UnavailableItemProps,
+  TimeRanges,
 } from '@howljs/calendar-kit';
 import type { NavigationProp, RouteProp } from '@react-navigation/native';
 // import dayjs from 'dayjs';
@@ -20,6 +21,7 @@ import React, {
   useState,
 } from 'react';
 import {
+  Alert,
   AppState,
   StyleSheet,
   Text,
@@ -56,8 +58,7 @@ const randColor = () => {
       .toUpperCase()
   );
 };
-
-const unavailableHours = {
+const unavailableHours: TimeRanges = {
   '0': [{ start: 0, end: 24 }],
   '1': [
     { start: 0, end: 7 },
@@ -65,6 +66,7 @@ const unavailableHours = {
   ],
   '2': [
     { start: 0, end: 7 },
+    { start: 7.5, end: 10 },
     { start: 18, end: 24 },
   ],
   '3': [
@@ -80,10 +82,10 @@ const unavailableHours = {
     { start: 18, end: 24 },
   ],
   '6': [{ start: 0, end: 24 }],
-  '2022-12-01': [
-    { start: 0, end: 7.5 },
-    { start: 12, end: 13.5 },
-    { start: 17, end: 24 },
+  '2023-02-16': [
+    { start: 0, end: 24 },
+    // { start: 12, end: 13.5 },
+    // { start: 17, end: 24 },
   ],
   '2022-11-29': [
     { start: 0, end: 8.5 },
@@ -140,6 +142,30 @@ const Calendar = ({ route, navigation }: CalendarProps) => {
     });
   }, [_renderHeaderRight, navigation]);
 
+  const isTimeAvailable = (
+    start: moment.Moment,
+    end: moment.Moment
+  ): boolean => {
+    const dayEvent = start.format('YYYY-MM-DD');
+    const unavailableRanges = unavailableHours[dayEvent] ?? [];
+    const startHour = start.hours() + start.minutes() / 60;
+    const endHour = end.hours() + end.minutes() / 60;
+
+    for (const range of unavailableRanges) {
+      if (startHour >= range.start && startHour < range.end) {
+        return false;
+      }
+      if (endHour > range.start && endHour <= range.end) {
+        return false;
+      }
+      if (startHour <= range.start && endHour >= range.end) {
+        return false;
+      }
+    }
+
+    return true;
+  };
+
   const _onDragCreateEnd = (event: RangeTime) => {
     const randomId = Math.random().toString(36).slice(2, 10);
     const newEvent = {
@@ -150,7 +176,70 @@ const Calendar = ({ route, navigation }: CalendarProps) => {
       color: randLightColor(),
       containerStyle: { borderColor: randColor(), borderWidth: 1 },
     };
-    setEvents((prev) => [...prev, newEvent]);
+    // Condition check can not create event in unavaiableHours
+    //TODO: Handle with holidays too
+    const hourEnd = moment
+      .tz(moment(event.end).add(1, 'second'), 'Asia/Ho_Chi_Minh')
+      .format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
+    const hourStart = moment
+      .tz(moment(event.start).add(1, 'second'), 'Asia/Ho_Chi_Minh')
+      .format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
+    const dayEvent = moment(event.start).weekday();
+    const isAvailable = unavailableHours[dayEvent]!.every(({ start, end }) => {
+      const eventStart = moment(hourStart)
+        .utc()
+        .diff(moment(hourStart).utc().startOf('day'), 'hours', true);
+      const eventEnd = moment(hourEnd)
+        .utc()
+        .diff(moment(hourEnd).utc().startOf('day'), 'hours', true);
+      return eventEnd <= start || eventStart >= end;
+    });
+    // if (isTimeAvailable(hourStart, hourEnd)) {
+    //   setEvents((prev) => [...prev, newEvent]);
+    // } else {
+    //   Alert.alert(
+    //     'Warning',
+    //     'New time slot is not Available, please try another time slot'
+    //   );
+    // }
+    // let isTimeAvailable = true;
+    // if (unavailableHours[dayEvent]) {
+    //   for (let i = 0; i < unavailableHours[dayEvent].length; i++) {
+    //     const range = unavailableHours[dayEvent]![i];
+    //     if (
+    //       hourEnd >=
+    //         moment(hourStart)
+    //           .hour(range!.start)
+    //           .format('YYYY-MM-DDTHH:mm:ss.SSS[Z]') &&
+    //       hourStart <=
+    //         moment(hourStart)
+    //           .hour(range!.end)
+    //           .format('YYYY-MM-DDTHH:mm:ss.SSS[Z]')
+    //     ) {
+    //       isTimeAvailable = false;
+    //       break;
+    //     }
+    //   }
+    // }
+    // Check if time is not in unavailable schedule
+    // const isAvailable = unavailableHours[dayEvent].every(({ start, end }) => {
+    //   const unavailableStart = moment(hourStart)
+    //     .startOf('day')
+    //     .add(start, 'hours');
+    //   const unavailableEnd = moment(hourStart).startOf('day').add(end, 'hours');
+    //   return (
+    //     hourEnd.isSameOrBefore(unavailableStart) ||
+    //     hourStart.isSameOrAfter(unavailableEnd)
+    //   );
+    // });
+    if (isAvailable) {
+      setEvents((prev) => [...prev, newEvent]);
+    } else {
+      Alert.alert(
+        'Warning',
+        'New time slot is not Available, please try another time slot'
+      );
+    }
   };
 
   const _onLongPressEvent = (event: PackedEvent) => {
@@ -193,7 +282,7 @@ const Calendar = ({ route, navigation }: CalendarProps) => {
 
   const highlightDates: HighlightDates = useMemo(
     () => ({
-      '2022-11-07': {
+      '2023-02-13': {
         dayNameColor: '#CF0A0A',
         dayNumberColor: '#CF0A0A',
         dayNumberBackgroundColor: '#FFF',
@@ -207,6 +296,7 @@ const Calendar = ({ route, navigation }: CalendarProps) => {
         dayNameColor: '#E14D2A',
         dayNumberColor: '#FFF',
         dayNumberBackgroundColor: '#E14D2A',
+
       },
     }),
     []
@@ -254,7 +344,7 @@ const Calendar = ({ route, navigation }: CalendarProps) => {
         allowDragToCreate
         events={events}
         unavailableHours={unavailableHours}
-        holidays={['2023-02-16', '2022-11-02']}
+        // holidays={['2023-02-16', '2022-11-02']}
         onDragCreateEnd={_onDragCreateEnd}
         onLongPressEvent={_onLongPressEvent}
         selectedEvent={selectedEvent}
@@ -263,6 +353,7 @@ const Calendar = ({ route, navigation }: CalendarProps) => {
         highlightDates={highlightDates}
         onPressDayNum={_onPressDayNum}
         onChange={_onChange}
+        dragStep={15}
         reverseDayNumber={true}
         theme={{
           unavailableBackgroundColor: 'transparent',
