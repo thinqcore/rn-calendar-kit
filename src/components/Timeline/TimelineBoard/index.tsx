@@ -16,6 +16,7 @@ import HorizontalLine from './HorizontalLine';
 import UnavailableMultipleDays from './UnavailableMultipleDays';
 import VerticalBlock from './VerticalBlock';
 import VerticalLine from './VerticalLine';
+import { times as _times, constant } from 'lodash';
 
 interface TimelineBoardProps {
   startDate: string;
@@ -29,6 +30,7 @@ interface TimelineBoardProps {
   halfLineContainerStyle?: ViewStyle;
 }
 
+//TODO: Implement props later
 const TimelineBoard = ({
   holidays,
   startDate,
@@ -44,19 +46,25 @@ const TimelineBoard = ({
     unavailableHours,
     minDate,
     maxDate,
+    dragStep,
   } = useTimelineCalendarContext();
+
+  const step = 60 / dragStep;
 
   const _renderHorizontalLine = ({ hourNumber }: HourItem, index: number) => {
     return (
       <React.Fragment key={`line_${hourNumber}`}>
         <HorizontalLine hourIndex={index} />
-        {isShowHalfLine && (
-          <HorizontalLine
-            hourIndex={index + 0.5}
-            renderHalfLineCustom={renderHalfLineCustom}
-            containerStyle={halfLineContainerStyle}
-          />
-        )}
+        {isShowHalfLine &&
+          _times(step, constant(null)).map((i, e) => {
+            return (
+              <HorizontalLine
+                hourIndex={index + (e + 1) * 0.25}
+                renderHalfLineCustom={renderHalfLineCustom}
+                containerStyle={halfLineContainerStyle}
+              />
+            );
+          })}
         {index === hours.length - 1 && <HorizontalLine hourIndex={index + 1} />}
       </React.Fragment>
     );
