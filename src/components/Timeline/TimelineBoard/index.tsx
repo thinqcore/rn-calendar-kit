@@ -56,7 +56,7 @@ const TimelineBoard = ({
       <React.Fragment key={`line_${hourNumber}`}>
         <HorizontalLine hourIndex={index} />
         {isShowHalfLine &&
-          _times(step, constant(null)).map((i, e) => {
+          _times(step, constant(null)).map((_, e) => {
             return (
               <HorizontalLine
                 hourIndex={index + (e + 1) * 0.25}
