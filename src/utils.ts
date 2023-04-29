@@ -169,6 +169,10 @@ const buildEvent = (
   width: number,
   options: PopulateOptions
 ): PackedEvent => {
+  const { columnWidth, rightEdgeSpacing } = options;
+  const totalWidth = columnWidth - rightEdgeSpacing;
+  const { resolveOverlap } = event;
+
   const eventStart = moment.tz(event.start, options.tzOffset);
   const eventEnd = moment.tz(event.end, options.tzOffset);
   const timeToHour = eventStart.hour() + eventStart.minute() / 60;
@@ -190,7 +194,8 @@ const buildEvent = (
     startHour: start,
     duration: diffHour,
     left,
-    width,
+    width: resolveOverlap === 'lane' ? width : totalWidth - left,
+    zIndex: left + 1,
   };
 };
 
@@ -203,12 +208,22 @@ const packOverlappingEventGroup = (
     populateOptions;
 
   columns.forEach((column, columnIndex) => {
-    column.forEach((event) => {
+    column.forEach((event: EventItem) => {
       const totalWidth = columnWidth - rightEdgeSpacing;
       const columnSpan = calcColumnSpan(event, columnIndex, columns);
-      const eventLeft = (columnIndex / columns.length) * totalWidth;
+      // const eventLeft = (columnIndex / columns.length) * totalWidth;
+      let eventLeft = (columnIndex / columns.length) * totalWidth;
+      if (event.resolveOverlap === 'ignore') {
+        eventLeft = 0;
+      }
+      if (event.resolveOverlap === 'stack') {
+        eventLeft = (columnIndex / columns.length) * totalWidth;
+      }
 
-      let eventWidth = totalWidth * (columnSpan / columns.length);
+      let eventWidth = totalWidth;
+      if (event.resolveOverlap === 'stack' || event.resolveOverlap === 'lane') {
+        eventWidth = totalWidth * (columnSpan / columns.length);
+      }
       if (columnIndex + columnSpan <= columns.length - 1) {
         eventWidth -= overlapEventsSpacing;
       }
@@ -282,7 +297,6 @@ export const populateEvents = (
   if (columns.length > 0) {
     packOverlappingEventGroup(columns, calculatedEvents, options);
   }
-
   return calculatedEvents;
 };
 

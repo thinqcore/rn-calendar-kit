@@ -75,6 +75,7 @@ const EventBlock = ({
         height: eventHeight,
         left: event.left + columnWidth * dayIndex,
         width: event.width,
+        zIndex: 1 + event.left,
       };
     }
 
@@ -91,6 +92,7 @@ const EventBlock = ({
       width: withTiming(event.width, {
         duration: eventAnimatedDuration,
       }),
+      zIndex: 1 + event.left,
     };
   }, [event]);
 

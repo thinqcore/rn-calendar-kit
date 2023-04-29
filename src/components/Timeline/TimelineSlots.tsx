@@ -207,7 +207,6 @@ const TimelineSlots = ({
       keyExtractor: (item: string) => item,
       onScroll: _onHorizontalScroll,
     };
-
     const listSize = {
       height:
         totalHours * maxTimeIntervalHeight + spaceFromTop + spaceFromBottom,

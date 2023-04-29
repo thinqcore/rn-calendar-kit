@@ -122,6 +122,7 @@ export interface UnavailableItemProps {
 }
 
 export type CalendarViewMode = 'day' | 'week' | 'threeDays' | 'workWeek';
+export type OverlapMethod = 'stack' | 'lane' | 'ignore';
 
 export interface TimelineProviderProps {
   /** Calendar view mode.
@@ -432,6 +433,9 @@ export interface EventItem {
   /** Container style of the event */
   containerStyle?: StyleProp<ViewStyle>;
   [key: string]: any;
+
+  placeHolderEvent?: boolean;
+  resolveOverlap?: OverlapMethod;
 }
 
 export interface PackedEvent extends EventItem {
@@ -440,6 +444,7 @@ export interface PackedEvent extends EventItem {
   width: number;
   duration: number;
   leftByIndex?: number;
+  zIndex?: number;
 }
 
 export type LocaleType = string;

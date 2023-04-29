@@ -103,6 +103,54 @@ MomentConfig.updateLocale('ja', {
 const Calendar = ({ route, navigation }: CalendarProps) => {
   const { bottom: safeBottom } = useSafeAreaInsets();
   const calendarRef = useRef<TimelineCalendarHandle>(null);
+
+  const exampleData: EventItem[] = [
+    {
+      id: 'wzv021ap',
+      title: 'wzv021ap',
+      start: '2023-04-20T00:00:00.000Z',
+      end: '2023-04-20T01:00:00.000Z',
+      color: 'hsl(78.86169668566279,47.530746475392036%,89.57871410435371%)',
+      containerStyle: {
+        borderColor: '#6C73E0',
+        borderWidth: 1,
+      },
+    },
+    {
+      id: 'wzv021ap',
+      title: 'wzv021ap',
+      start: '2023-04-20T00:30:00.000Z',
+      end: '2023-04-20T01:30:00.000Z',
+      color: 'hsl(78.86169668566279,47.530746475392036%,89.57871410435371%)',
+      containerStyle: {
+        borderColor: '#6C73E0',
+        borderWidth: 1,
+      },
+      placeHolderEvent: true,
+    },
+    {
+      id: 'cmop6qon',
+      title: 'cmop6qon',
+      start: '2023-04-19T00:00:00.000Z',
+      end: '2023-04-19T01:00:00.000Z',
+      color: 'hsl(21.531582135787513,62.23312649898943%,93.53199840587816%)',
+      containerStyle: {
+        borderColor: '#4E9428',
+        borderWidth: 1,
+      },
+    },
+    {
+      id: 'wk9y1zog',
+      title: 'wk9y1zog',
+      start: '2023-04-21T00:00:00.000Z',
+      end: '2023-04-21T01:00:00.000Z',
+      color: 'hsl(98.36214188180703,43.78065261401107%,87.97715074599336%)',
+      containerStyle: {
+        borderColor: '#91990A',
+        borderWidth: 1,
+      },
+    },
+  ];
   const [events, setEvents] = useState<EventItem[]>([]);
   const [selectedEvent, setSelectedEvent] = useState<PackedEvent>();
 
@@ -163,6 +211,7 @@ const Calendar = ({ route, navigation }: CalendarProps) => {
       end: event.end,
       color: randLightColor(),
       containerStyle: { borderColor: randColor(), borderWidth: 1 },
+      resolveOverlap: 'stack',
     };
     // Condition check can not create event in unavaiableHours
     //TODO: Handle with holidays too
@@ -342,6 +391,11 @@ const Calendar = ({ route, navigation }: CalendarProps) => {
         onChange={_onChange}
         dragStep={15}
         reverseDayNumber={true}
+        rightEdgeSpacing={0}
+        overlapEventsSpacing={0}
+        EditIndicatorComponent={
+          <View style={{ backgroundColor: 'red', width: '100%', height: 16 }} />
+        }
         theme={{
           unavailableBackgroundColor: 'transparent',
           //Saturday style
