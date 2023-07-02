@@ -59,6 +59,7 @@ const TimelineBoard = ({
           _times(step, constant(null)).map((_, e) => {
             return (
               <HorizontalLine
+                key={`line_${hourNumber}_${e}`}
                 hourIndex={index + (e + 1) * 0.25}
                 renderHalfLineCustom={renderHalfLineCustom}
                 containerStyle={halfLineContainerStyle}
