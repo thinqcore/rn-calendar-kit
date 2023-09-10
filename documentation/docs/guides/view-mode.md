@@ -8,7 +8,7 @@ TimelineCalendar has 4 modes: **week**, **day**, **threeDays** and **workWeek**
 ```jsx title="Example"
 import React from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
-import { TimelineCalendar } from '@howljs/calendar-kit';
+import { TimelineCalendar } from 'rn-calendar-kit';
 
 const Calendar = () => {
   return (

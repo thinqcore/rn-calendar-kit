@@ -11,7 +11,7 @@ Events will be displayed in the timeline view. `events` is a array of [EventItem
 ```jsx title="Example"
 import { SafeAreaView, Text } from 'react-native';
 import React from 'react';
-import { TimelineCalendar, EventItem } from '@howljs/calendar-kit';
+import { TimelineCalendar, EventItem } from 'rn-calendar-kit';
 
 const exampleEvents: EventItem[] = [
   {

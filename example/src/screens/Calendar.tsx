@@ -9,7 +9,7 @@ import {
   TimelineCalendarHandle,
   UnavailableItemProps,
   TimeRanges,
-} from '@howljs/calendar-kit';
+} from 'rn-calendar-kit';
 import type { NavigationProp, RouteProp } from '@react-navigation/native';
 import moment from 'moment-timezone';
 import React, {

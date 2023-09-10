@@ -1,5 +1,5 @@
 {
-  "name": "@howljs/calendar-kit",
+  "name": "rn-calendar-kit",
   "version": "1.13.1",
   "description": "React Native Calendar Kit",
   "main": "lib/commonjs/index",
@@ -42,13 +42,13 @@
     "calendar-kit",
     "calendar-week-view"
   ],
-  "repository": "https://github.com/howljs/react-native-calendar-kit",
-  "author": "howljs <lehau.dev@gmail.com> (https://github.com/howljs)",
+  "repository": "https://github.com/MinhOmega/react-native-calendar-kit",
+  "author": "MinhOmega <vnqminh0502@gmail.com> (https://github.com/MinhOmega)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/howljs/react-native-calendar-kit/issues"
+    "url": "https://github.com/MinhOmega/react-native-calendar-kit/issues"
   },
-  "homepage": "https://github.com/howljs/react-native-calendar-kit#readme",
+  "homepage": "https://github.com/MinhOmega/react-native-calendar-kit#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },

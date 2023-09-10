@@ -9,7 +9,7 @@ The calendar can be localized by adding custom locales.
 ```jsx title="Example"
 import React from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
-import { MomentConfig } from '@howljs/calendar-kit';
+import { MomentConfig } from 'rn-calendar-kit';
 
 MomentConfig.updateLocale('ja', {
   weekdaysShort: '日_月_火_水_木_金_土'.split('_'),

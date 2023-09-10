@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "paths": {
-      "@howljs/calendar-kit": ["./src/index"]
+      "rn-calendar-kit": ["./src/index"]
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,

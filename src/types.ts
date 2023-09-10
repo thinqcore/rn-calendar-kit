@@ -88,7 +88,7 @@ export interface TimelineProps {
   onEndDragSelectedEvent?: (event: PackedEvent) => void;
   /** Custom Unavailable Item */
   renderCustomUnavailableItem?: (props: UnavailableItemProps) => JSX.Element;
-  /** Custom style of day bar by date ([#Example](https://howljs.github.io/react-native-calendar-kit/docs/guides/custom-header#highlightdates)) */
+  /** Custom style of day bar by date ([#Example](https://MinhOmega.github.io/react-native-calendar-kit/docs/guides/custom-header#highlightdates)) */
   highlightDates?: HighlightDates;
   /** Callback function will be called when index changed */
   onChange?: (props: OnChangeProps) => void;
@@ -243,8 +243,8 @@ export interface TimelineProviderProps {
 
   /** Set unavailable hours of the calendar
    *
-   ** All days in a week ([#Example](https://howljs.github.io/react-native-calendar-kit/docs/guides/unavailable-time#set-unavailable-hours-for-all-days-in-a-week))
-   ** By week day. ([#Example](https://howljs.github.io/react-native-calendar-kit/docs/guides/unavailable-time#set-unavailable-hours-by-week-day))
+   ** All days in a week ([#Example](https://MinhOmega.github.io/react-native-calendar-kit/docs/guides/unavailable-time#set-unavailable-hours-for-all-days-in-a-week))
+   ** By week day. ([#Example](https://MinhOmega.github.io/react-native-calendar-kit/docs/guides/unavailable-time#set-unavailable-hours-by-week-day))
    */
   unavailableHours?: UnavailableHour[] | TimeRanges;
 
@@ -280,7 +280,7 @@ export interface TimelineProviderProps {
 
    Example:
    ```javascript
-    import {MomentConfig} from '@howljs/calendar-kit';
+    import {MomentConfig} from 'rn-calendar-kit';
     MomentConfig.updateLocale('ja', {
         weekdaysShort: '日_月_火_水_木_金_土'.split('_'),
     });

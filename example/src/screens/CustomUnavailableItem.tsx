@@ -1,4 +1,4 @@
-import type { UnavailableItemProps } from '@howljs/calendar-kit';
+import type { UnavailableItemProps } from 'rn-calendar-kit';
 import React from 'react';
 import Animated, { useAnimatedProps } from 'react-native-reanimated';
 import Svg, { Defs, Line, Pattern, Rect } from 'react-native-svg';

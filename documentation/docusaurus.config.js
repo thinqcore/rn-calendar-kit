@@ -4,12 +4,12 @@
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
-const organizationName = 'howljs';
+const organizationName = 'MinhOmega';
 const projectName = 'react-native-calendar-kit';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: '@howljs/calendar-kit',
+  title: 'rn-calendar-kit',
   tagline: 'React native calendar component',
   url: `https://${organizationName}.github.io`,
   baseUrl: `/${projectName}/`,
@@ -42,7 +42,7 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: '@howljs/calendar-kit',
+        title: 'rn-calendar-kit',
         logo: {
           alt: 'RN Calendar Kit',
           src: 'img/logo.svg',
@@ -55,7 +55,7 @@ const config = {
             label: 'Docs',
           },
           {
-            href: 'https://github.com/howljs/react-native-calendar-kit',
+            href: 'https://github.com/MinhOmega/react-native-calendar-kit',
             label: 'GitHub',
             position: 'right',
           },
