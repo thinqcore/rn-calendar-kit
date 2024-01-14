@@ -85,6 +85,7 @@ const TimelineCalendarContext = React.createContext<
 
 const TimelineProvider: React.FC<TimelineProviderProps> = (props) => {
   const {
+    // @ts-ignore
     children,
     minDate = DEFAULT_PROPS.MIN_DATE,
     maxDate = DEFAULT_PROPS.MAX_DATE,
